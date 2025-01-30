@@ -27,33 +27,16 @@ function updateClock() {
 
 // Extend fullscreen behavior without overriding the default functionality
 function extendFullscreenBehavior() {
-  const fullscreenButton = document.querySelector("button.ytp-fullscreen-button");
+  
 
-  if (!fullscreenButton) {
-    console.error("Fullscreen button not found!");
-    return;
-  }
+  document.addEventListener('fullscreenchange', (event) => {
+    if (document.fullscreenElement) {
+      clock.style.display = "block"
+    } else {
+      clock.style.display = "none";
+    }
+  });
 
-  fullscreenButton.addEventListener(
-    "click",
-    () => {
-      // Wait for YouTube to process fullscreen
-      setTimeout(() => {
-        const clock = document.getElementById("fullscreen-clock");
-        if (document.fullscreenElement) {
-          clock.style.display = "block"; // Show clock
-          updateClock();
-          if (!clock.dataset.intervalSet) {
-            clock.dataset.intervalSet = true; // Avoid multiple intervals
-            setInterval(updateClock, 1000); // Update clock every second
-          }
-        } else {
-          clock.style.display = "none"; // Hide clock
-        }
-      }, 100); // Slight delay to ensure fullscreen detection
-    },
-    false // Ensure this listener doesn’t block default behavior
-  );
 }
 
 // Add the clock element to the page
