@@ -12,8 +12,6 @@ This browser extension adds a clock to YouTube's fullscreen mode, so you can kee
 - Minimalistic and non-intrusive design.
 - Compatible with major browsers (e.g., Chrome, Firefox, Edge).
 
-## Installation
-
 ## Installation (Developer Mode) for Chrome
 
 This extension needs to be added in **developer mode**. Follow the instructions below for your browser:
