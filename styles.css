@@ -1,9 +1,9 @@
 #fullscreen-clock {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   z-index: 9999;
-  padding: 10px 10px;
+  padding: 5px 5px;
   background: rgba(0, 0, 0, 0.4);
   color: white;
   font-size: 18px;

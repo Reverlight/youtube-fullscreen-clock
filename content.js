@@ -10,7 +10,7 @@ function updateClock() {
   const clock = document.querySelector("#fullscreen-clock"); // Use querySelector to get clock
   if (clock) {
     const now = new Date();
-    const timeString = now.toLocaleTimeString();
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Exclude seconds
     clock.textContent = timeString;
   }
 }
