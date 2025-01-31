@@ -13,11 +13,11 @@ function createClockElement() {
   clock.style.padding = "10px 20px";
   clock.style.borderRadius = "5px";
   clock.style.fontSize = "18px";
-  clock.style.display = "none";
+  // clock.style.display = "none"; // Hide initially
 }
 
 function updateClock() {
-  const clock = document.getElementById("fullscreen-clock");
+  const clock = document.querySelector("#fullscreen-clock"); // Use querySelector to get clock
   if (clock) {
     const now = new Date();
     const timeString = now.toLocaleTimeString();
@@ -27,22 +27,35 @@ function updateClock() {
 
 // Extend fullscreen behavior without overriding the default functionality
 function extendFullscreenBehavior() {
-  
-
   document.addEventListener('fullscreenchange', (event) => {
+    
+    const clock = document.querySelector("#fullscreen-clock"); 
+    // Use querySelector to get clock
+
+    
     if (document.fullscreenElement) {
-      clock.style.display = "block"
+      if (clock) {
+        clock.style.display = "block"; // Show the clock when fullscreen is active
+      }
     } else {
-      clock.style.display = "none";
+      if (clock) {
+        clock.style.display = "none"; // Hide the clock when exiting fullscreen
+      }
     }
   });
+}
 
+function startClockUpdates() {
+  updateClock(); // Update immediately
+  setInterval(updateClock, 10000); // Update every 10 seconds
 }
 
 // Add the clock element to the page
-createClockElement();
+
 
 // Wait for the page to fully load and attach the event listener
 window.addEventListener("load", () => {
+  createClockElement();
   extendFullscreenBehavior();
+  startClockUpdates();
 });
