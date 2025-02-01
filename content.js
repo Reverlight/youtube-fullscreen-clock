@@ -1,58 +1,71 @@
-const clockId = 'fullscreen-clock';
-const timeParams = { hour: '2-digit', minute: '2-digit' };
-const disableClockFeatureKey = 'p';
-let clockDisabled = false;
-let clock;
-
-
 function createClockElement() {
-  clock = document.createElement("div");
-  clock.id = clockId;
+  const clock = document.createElement("div");
+  clock.id = "fullscreen-clock";
   document.body.appendChild(clock);
-  clock.style.display = "none";
+
+  clock.style.display = "none"; // Hide initially
 }
 
 function updateClock() {
+  const clock = document.querySelector("#fullscreen-clock"); // Use querySelector to get clock
   if (clock) {
-    let now = new Date();
-    let timeString = now.toLocaleTimeString([], timeParams);
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Exclude seconds
     clock.textContent = timeString;
   }
 }
 
+// Extend fullscreen behavior without overriding the default functionality
 function extendFullscreenBehavior() {
   document.addEventListener('fullscreenchange', (event) => {
-    if (clockDisabled === true){
-      return;
-    }
+    
+    const clock = document.querySelector("#fullscreen-clock"); 
+    // Use querySelector to get clock
+
+    
     if (document.fullscreenElement) {
-      clock.style.display = "block";
+      if (clock) {
+        clock.style.display = "block"; // Show the clock when fullscreen is active
+      }
     } else {
-      clock.style.display = "none";
+      if (clock) {
+        clock.style.display = "none"; // Hide the clock when exiting fullscreen
+      }
     }
-  });
-}
 
-function disableClockFeature() {
+    
+  });
+
+
   document.addEventListener('keydown', (event) => {
-    if (event.key != disableClockFeatureKey) {
-      return;
-    }
-    if (clockDisabled === false) {
-      clock.style.display = "none"; 
-      clockDisabled = true;
-    }
-    else {
-      clockDisabled = false;
-      clock.style.display = "block";
+    console.log(event.key);
+    if (event.key == "p") {
+      const clock = document.querySelector("#fullscreen-clock"); 
+      clock.id = "fullscreen-clock";
+      
+      if (clock.style.display == "none") {
+        clock.style.display = "block"; 
+      }
+      else {
+        clock.style.display = "none";
+      }
+       // Hide initially 
     }
   });
+
 }
 
+function startClockUpdates() {
+  updateClock(); // Update immediately
+  setInterval(updateClock, 10000); // Update every 10 seconds
+}
 
+// Add the clock element to the page
+
+
+// Wait for the page to fully load and attach the event listener
 window.addEventListener("load", () => {
   createClockElement();
   extendFullscreenBehavior();
-  disableClockFeature()
-  setInterval(updateClock, 10000);
+  startClockUpdates();
 });
