@@ -32,7 +32,27 @@ function extendFullscreenBehavior() {
         clock.style.display = "none"; // Hide the clock when exiting fullscreen
       }
     }
+
+    
   });
+
+
+  document.addEventListener('keydown', (event) => {
+    console.log(event.key);
+    if (event.key == "p") {
+      const clock = document.querySelector("#fullscreen-clock"); 
+      clock.id = "fullscreen-clock";
+      
+      if (clock.style.display == "none") {
+        clock.style.display = "block"; 
+      }
+      else {
+        clock.style.display = "none";
+      }
+       // Hide initially 
+    }
+  });
+
 }
 
 function startClockUpdates() {
